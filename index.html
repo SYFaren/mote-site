@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>mote — tiny GUI text editor</title>
+  <meta name="description" content="mote and mote-x — tiny cross-platform GUI text editors by SYFaren." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <center>
+    <table class="page" cellpadding="0" cellspacing="0" border="0" width="760">
+      <tr>
+        <td class="banner" colspan="2">
+          <table width="100%" cellpadding="6" cellspacing="0" border="0">
+            <tr>
+              <td>
+                <font class="banner-title">mote</font>
+                <font class="banner-sub"> · tiny GUI text editor · SYFaren</font>
+              </td>
+              <td align="right" class="banner-nav">
+                <a href="#download">Download</a> |
+                <a href="#gallery">Screenshots</a> |
+                <a href="#compare">Compare</a> |
+                <a id="gh-link" href="#">GitHub</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="main" colspan="2">
+          <h1>Welcome to mote!</h1>
+          <p>
+            Ultra-compact GUI text editors for <b>Linux</b> and <b>Windows</b>.
+            Classic <b>mote</b> is squeezed hard; <b>mote-x</b> adds syntax,
+            themes, wrap, multi-doc and more — still tiny.
+          </p>
+
+          <table class="tip" width="100%" cellpadding="8" cellspacing="0" border="1">
+            <tr>
+              <td>
+                <b>★ Tip:</b> binaries live in GitHub <b>Releases</b> of the
+                main <code>mote</code> repo — not in this site and not in git.
+                Screenshots below are real captures of the running programs.
+              </td>
+            </tr>
+          </table>
+
+          <p align="center" class="cta-line">
+            <a class="btn" href="#download">↓ Скачать</a>
+            &nbsp;
+            <a class="btn" href="#gallery">▣ Галерея</a>
+            &nbsp;
+            <a class="btn" id="gh-releases" href="#">Releases</a>
+          </p>
+
+          <hr />
+
+          <h2 id="gallery">Screenshots</h2>
+          <p class="muted">
+            Real window captures (X11). Click a thumbnail to enlarge.
+          </p>
+
+          <table class="gallery" cellpadding="8" cellspacing="4" border="0" width="100%">
+            <tr>
+              <td align="center" width="33%">
+                <a class="shot" href="gallery/01-mote-classic.png" data-cap="mote — classic editor">
+                  <img src="gallery/01-mote-classic.png" width="220" alt="mote classic" border="2" />
+                </a>
+                <div class="cap"><b>mote</b><br />classic · hello.c</div>
+              </td>
+              <td align="center" width="33%">
+                <a class="shot" href="gallery/02-motex-syntax-dark.png" data-cap="mote-x — syntax (dark)">
+                  <img src="gallery/02-motex-syntax-dark.png" width="220" alt="mote-x syntax dark" border="2" />
+                </a>
+                <div class="cap"><b>mote-x</b><br />syntax · dark</div>
+              </td>
+              <td align="center" width="33%">
+                <a class="shot" href="gallery/03-motex-theme-light.png" data-cap="mote-x — light theme">
+                  <img src="gallery/03-motex-theme-light.png" width="220" alt="mote-x light" border="2" />
+                </a>
+                <div class="cap"><b>mote-x</b><br />theme · light</div>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                <a class="shot" href="gallery/08-motex-theme-slate.png" data-cap="mote-x — slate theme">
+                  <img src="gallery/08-motex-theme-slate.png" width="220" alt="mote-x slate" border="2" />
+                </a>
+                <div class="cap"><b>mote-x</b><br />theme · slate</div>
+              </td>
+              <td align="center">
+                <a class="shot" href="gallery/04-motex-find.png" data-cap="mote-x — find">
+                  <img src="gallery/04-motex-find.png" width="220" alt="mote-x find" border="2" />
+                </a>
+                <div class="cap"><b>mote-x</b><br />find (Ctrl+F)</div>
+              </td>
+              <td align="center">
+                <a class="shot" href="gallery/07-motex-goto.png" data-cap="mote-x — go to line">
+                  <img src="gallery/07-motex-goto.png" width="220" alt="mote-x goto" border="2" />
+                </a>
+                <div class="cap"><b>mote-x</b><br />goto line</div>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                <a class="shot" href="gallery/05-motex-multidoc.png" data-cap="mote-x — multi-document [1/3]">
+                  <img src="gallery/05-motex-multidoc.png" width="220" alt="mote-x multidoc" border="2" />
+                </a>
+                <div class="cap"><b>mote-x</b><br />multi-doc</div>
+              </td>
+              <td align="center">
+                <a class="shot" href="gallery/06-motex-wrap.png" data-cap="mote-x — soft wrap">
+                  <img src="gallery/06-motex-wrap.png" width="220" alt="mote-x wrap" border="2" />
+                </a>
+                <div class="cap"><b>mote-x</b><br />soft wrap</div>
+              </td>
+              <td align="center">
+                <a class="shot" href="gallery/09-motex-help.png" data-cap="mote-x — F1 help">
+                  <img src="gallery/09-motex-help.png" width="220" alt="mote-x help" border="2" />
+                </a>
+                <div class="cap"><b>mote-x</b><br />F1 help</div>
+              </td>
+            </tr>
+          </table>
+
+          <hr />
+
+          <h2 id="compare">Two sizes</h2>
+          <table class="compare" width="100%" cellpadding="10" cellspacing="0" border="1">
+            <tr class="compare-head">
+              <th width="50%">mote</th>
+              <th width="50%">mote-x</th>
+            </tr>
+            <tr>
+              <td valign="top">
+                Original. Ultra-compact. Fixed set.
+                <ul>
+                  <li>Find, goto, dup/del line</li>
+                  <li>Bracket jump, auto-indent</li>
+                  <li>~17–33 KB on Linux</li>
+                </ul>
+              </td>
+              <td valign="top">
+                Extended. Soft budget ~100–200 KB.
+                <ul>
+                  <li>Syntax highlight, themes</li>
+                  <li>Wrap, multi-doc, zoom</li>
+                  <li>Replace, recent, EOL</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+
+          <hr />
+
+          <h2 id="download">Скачать</h2>
+          <p class="hint" id="dl-hint">
+            Кнопки ведут на файлы из <b>Releases</b> основного репозитория.
+          </p>
+          <div id="assets" class="assets">
+            <p class="loading">Загрузка релизов…</p>
+          </div>
+          <p class="platforms">
+            Linux · Windows · исходники:
+            <a id="gh-src" href="#">mote</a>
+          </p>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="footer" colspan="2">
+          <hr noshade size="1" />
+          mote by SYFaren ·
+          <a id="gh-site" href="#">site source</a>
+          · best viewed at 1024×768 ·
+          <span class="hit">screenshots: real, not AI</span>
+        </td>
+      </tr>
+    </table>
+  </center>
+
+  <div id="lightbox" class="lightbox" hidden>
+    <div class="lb-inner">
+      <p id="lb-cap" class="lb-cap"></p>
+      <img id="lb-img" src="" alt="" />
+      <p><a href="#" id="lb-close">[ close ]</a></p>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

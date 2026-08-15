@@ -1,0 +1,203 @@
+/* Old-school software homepage look (late 90s / early 2000s) */
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  padding: 12px 0 24px;
+  background: #c0c0c0 url("data:image/gif;base64,R0lGODlhBAAEAIAAAODg4P///yH5BAAAAAAALAAAAAAEAAQAAAIGRB5mGQUAOw==") repeat;
+  color: #000000;
+  font-family: "MS Sans Serif", Tahoma, Verdana, Geneva, sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+a { color: #0000ee; }
+a:visited { color: #551a8b; }
+a:active { color: #ff0000; }
+
+.page {
+  background: #ffffff;
+  border: 2px solid #808080;
+  border-right-color: #404040;
+  border-bottom-color: #404040;
+  box-shadow: 4px 4px 0 #808080;
+}
+
+.banner {
+  background: #000080;
+  color: #ffffff;
+  border-bottom: 2px solid #000060;
+}
+.banner a { color: #ffff99; }
+.banner a:visited { color: #ffff99; }
+.banner-title {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.banner-sub { font-size: 12px; color: #c0c0ff; }
+.banner-nav { font-size: 12px; white-space: nowrap; }
+
+.main {
+  padding: 14px 18px 8px;
+  background: #ffffff;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 22px;
+  color: #000080;
+}
+h2 {
+  margin: 0 0 8px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  color: #000080;
+  border-bottom: 1px solid #808080;
+  padding-bottom: 2px;
+}
+
+.tip {
+  background: #ffffcc;
+  border-color: #999900 !important;
+  margin: 10px 0;
+  font-size: 12px;
+}
+
+.cta-line { margin: 14px 0; }
+.btn {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #c0c0c0;
+  color: #000000 !important;
+  text-decoration: none;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  font-weight: bold;
+  font-size: 13px;
+}
+.btn:hover {
+  background: #dcdcdc;
+}
+.btn:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.muted, .hint, .platforms, .loading, .err, .cap {
+  color: #333333;
+  font-size: 12px;
+}
+.cap { margin-top: 4px; }
+
+.gallery img {
+  background: #000000;
+  vertical-align: middle;
+}
+.gallery td {
+  vertical-align: top;
+  background: #f0f0f0;
+  border: 1px solid #a0a0a0;
+}
+
+.compare {
+  border-collapse: collapse;
+  border-color: #808080;
+}
+.compare th, .compare td {
+  border: 1px solid #808080;
+}
+.compare-head th {
+  background: #000080;
+  color: #ffffff;
+  font-weight: bold;
+}
+.compare td {
+  background: #f8f8f8;
+}
+.compare ul {
+  margin: 8px 0 0 18px;
+  padding: 0;
+}
+
+.assets { margin: 10px 0 14px; }
+.asset {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 6px 0;
+  padding: 6px 8px;
+  background: #eeeeee;
+  border: 1px solid #808080;
+}
+.asset .name { font-weight: bold; }
+.asset .meta { color: #555555; font-size: 11px; }
+.asset a.btn { color: #000000 !important; }
+
+.footer {
+  padding: 4px 12px 10px;
+  text-align: center;
+  font-size: 11px;
+  color: #333333;
+  background: #e8e8e8;
+}
+.hit { color: #008000; }
+
+hr {
+  border: 0;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  margin: 14px 0;
+}
+
+code {
+  font-family: "Courier New", Courier, monospace;
+  background: #eeeeee;
+  padding: 0 3px;
+}
+
+/* lightbox — still plain */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.lightbox[hidden] { display: none; }
+.lb-inner {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  padding: 10px 12px;
+  max-width: min(960px, 96vw);
+  text-align: center;
+}
+.lb-cap {
+  margin: 0 0 8px;
+  font-weight: bold;
+  color: #000080;
+}
+.lb-inner img {
+  display: block;
+  max-width: 92vw;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  background: #111;
+  border: 1px solid #000;
+}
+#lb-close { font-weight: bold; }
+
+@media (max-width: 780px) {
+  body { padding: 0; }
+  .page { width: 100% !important; box-shadow: none; border-left: 0; border-right: 0; }
+  .banner-nav { display: block; margin-top: 6px; white-space: normal; }
+  .gallery td { display: block; width: auto !important; margin-bottom: 8px; }
+}
