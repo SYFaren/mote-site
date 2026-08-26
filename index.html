@@ -3,190 +3,125 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>mote — tiny GUI text editor</title>
-  <meta name="description" content="mote and mote-x — tiny cross-platform GUI text editors by SYFaren." />
+  <title>mote</title>
+  <meta name="description" content="mote — compact multi-platform C89 text editor" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <center>
-    <table class="page" cellpadding="0" cellspacing="0" border="0" width="760">
-      <tr>
-        <td class="banner" colspan="2">
-          <table width="100%" cellpadding="6" cellspacing="0" border="0">
-            <tr>
-              <td>
-                <font class="banner-title">mote</font>
-                <font class="banner-sub"> · tiny GUI text editor · SYFaren</font>
-              </td>
-              <td align="right" class="banner-nav">
-                <a href="#download">Download</a> |
-                <a href="#gallery">Screenshots</a> |
-                <a href="#compare">Compare</a> |
-                <a id="gh-link" href="#">GitHub</a>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
+<body data-os="linux" data-lang="ru">
+  <div class="shell">
+    <header class="top">
+      <div class="brand">
+        <span class="logo">mote</span>
+        <span class="tag" data-i18n="tag">крошечный редактор · SYFaren</span>
+      </div>
+      <nav class="nav">
+        <a href="#download" data-i18n="nav_dl">Скачать</a>
+        <a href="#gallery" data-i18n="nav_shots">Скриншоты</a>
+        <a id="gh-link" href="#">GitHub</a>
+        <span class="lang">
+          <button type="button" class="lang-btn is-on" data-lang="ru">RU</button>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+        </span>
+      </nav>
+    </header>
 
-      <tr>
-        <td class="main" colspan="2">
-          <h1>Welcome to mote!</h1>
-          <p>
-            Ultra-compact GUI text editors for <b>Linux</b> and <b>Windows</b>.
-            Classic <b>mote</b> is squeezed hard; <b>mote-x</b> adds syntax,
-            themes, wrap, multi-doc and more — still tiny.
-          </p>
+    <main>
+      <section class="hero">
+        <h1 data-i18n="hero_title">Один C89‑core — много платформ</h1>
+        <p class="lead" data-i18n="hero_lead">
+          Linux, Windows, DOS и браузер. Оверлей выбирается при сборке;
+          ядро остаётся крошечным и общим.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="#download" data-i18n="cta_dl">Скачать</a>
+          <a class="btn" id="gh-releases" href="#" data-i18n="cta_rel">Releases</a>
+        </div>
+      </section>
 
-          <table class="tip" width="100%" cellpadding="8" cellspacing="0" border="1">
-            <tr>
-              <td>
-                <b>★ Tip:</b> binaries live in GitHub <b>Releases</b> of the
-                main <code>mote</code> repo — not in this site and not in git.
-                Screenshots below are real captures of the running programs.
-              </td>
-            </tr>
-          </table>
+      <section id="download" class="block">
+        <h2 data-i18n="dl_title">Скачать</h2>
+        <p class="hint" data-i18n="dl_hint">
+          Выберите систему — покажем только нужные файлы из GitHub Releases.
+        </p>
 
-          <p align="center" class="cta-line">
-            <a class="btn" href="#download">↓ Скачать</a>
-            &nbsp;
-            <a class="btn" href="#gallery">▣ Галерея</a>
-            &nbsp;
-            <a class="btn" id="gh-releases" href="#">Releases</a>
-          </p>
+        <div class="os-tabs" role="tablist" aria-label="OS">
+          <button type="button" class="os-tab is-on" data-os="linux" role="tab">Linux</button>
+          <button type="button" class="os-tab" data-os="windows" role="tab">Windows</button>
+          <button type="button" class="os-tab" data-os="dos" role="tab">DOS</button>
+          <button type="button" class="os-tab" data-os="web" role="tab">Web</button>
+        </div>
 
-          <hr />
-
-          <h2 id="gallery">Screenshots</h2>
-          <p class="muted">
-            Real window captures (X11). Click a thumbnail to enlarge.
-          </p>
-
-          <table class="gallery" cellpadding="8" cellspacing="4" border="0" width="100%">
-            <tr>
-              <td align="center" width="33%">
-                <a class="shot" href="gallery/01-mote-classic.png" data-cap="mote — classic editor">
-                  <img src="gallery/01-mote-classic.png" width="220" alt="mote classic" border="2" />
-                </a>
-                <div class="cap"><b>mote</b><br />classic · hello.c</div>
-              </td>
-              <td align="center" width="33%">
-                <a class="shot" href="gallery/02-motex-syntax-dark.png" data-cap="mote-x — syntax (dark)">
-                  <img src="gallery/02-motex-syntax-dark.png" width="220" alt="mote-x syntax dark" border="2" />
-                </a>
-                <div class="cap"><b>mote-x</b><br />syntax · dark</div>
-              </td>
-              <td align="center" width="33%">
-                <a class="shot" href="gallery/03-motex-theme-light.png" data-cap="mote-x — light theme">
-                  <img src="gallery/03-motex-theme-light.png" width="220" alt="mote-x light" border="2" />
-                </a>
-                <div class="cap"><b>mote-x</b><br />theme · light</div>
-              </td>
-            </tr>
-            <tr>
-              <td align="center">
-                <a class="shot" href="gallery/08-motex-theme-slate.png" data-cap="mote-x — slate theme">
-                  <img src="gallery/08-motex-theme-slate.png" width="220" alt="mote-x slate" border="2" />
-                </a>
-                <div class="cap"><b>mote-x</b><br />theme · slate</div>
-              </td>
-              <td align="center">
-                <a class="shot" href="gallery/04-motex-find.png" data-cap="mote-x — find">
-                  <img src="gallery/04-motex-find.png" width="220" alt="mote-x find" border="2" />
-                </a>
-                <div class="cap"><b>mote-x</b><br />find (Ctrl+F)</div>
-              </td>
-              <td align="center">
-                <a class="shot" href="gallery/07-motex-goto.png" data-cap="mote-x — go to line">
-                  <img src="gallery/07-motex-goto.png" width="220" alt="mote-x goto" border="2" />
-                </a>
-                <div class="cap"><b>mote-x</b><br />goto line</div>
-              </td>
-            </tr>
-            <tr>
-              <td align="center">
-                <a class="shot" href="gallery/05-motex-multidoc.png" data-cap="mote-x — multi-document [1/3]">
-                  <img src="gallery/05-motex-multidoc.png" width="220" alt="mote-x multidoc" border="2" />
-                </a>
-                <div class="cap"><b>mote-x</b><br />multi-doc</div>
-              </td>
-              <td align="center">
-                <a class="shot" href="gallery/06-motex-wrap.png" data-cap="mote-x — soft wrap">
-                  <img src="gallery/06-motex-wrap.png" width="220" alt="mote-x wrap" border="2" />
-                </a>
-                <div class="cap"><b>mote-x</b><br />soft wrap</div>
-              </td>
-              <td align="center">
-                <a class="shot" href="gallery/09-motex-help.png" data-cap="mote-x — F1 help">
-                  <img src="gallery/09-motex-help.png" width="220" alt="mote-x help" border="2" />
-                </a>
-                <div class="cap"><b>mote-x</b><br />F1 help</div>
-              </td>
-            </tr>
-          </table>
-
-          <hr />
-
-          <h2 id="compare">Two sizes</h2>
-          <table class="compare" width="100%" cellpadding="10" cellspacing="0" border="1">
-            <tr class="compare-head">
-              <th width="50%">mote</th>
-              <th width="50%">mote-x</th>
-            </tr>
-            <tr>
-              <td valign="top">
-                Original. Ultra-compact. Fixed set.
-                <ul>
-                  <li>Find, goto, dup/del line</li>
-                  <li>Bracket jump, auto-indent</li>
-                  <li>~17–33 KB on Linux</li>
-                </ul>
-              </td>
-              <td valign="top">
-                Extended. Soft budget ~100–200 KB.
-                <ul>
-                  <li>Syntax highlight, themes</li>
-                  <li>Wrap, multi-doc, zoom</li>
-                  <li>Replace, recent, EOL</li>
-                </ul>
-              </td>
-            </tr>
-          </table>
-
-          <hr />
-
-          <h2 id="download">Скачать</h2>
-          <p class="hint" id="dl-hint">
-            Кнопки ведут на файлы из <b>Releases</b> основного репозитория.
-          </p>
-          <div id="assets" class="assets">
-            <p class="loading">Загрузка релизов…</p>
+        <div class="os-panel" data-panel="linux">
+          <div class="os-card os-linux">
+            <h3 data-i18n="linux_h">Linux / Unix</h3>
+            <p data-i18n="linux_p">X11, Wayland, SDL2, консоль TTY и framebuffer.</p>
+            <ul class="os-list">
+              <li><code>mote-linux-x11</code> — X11 GUI</li>
+              <li><code>mote-linux-wayland</code> — Wayland</li>
+              <li><code>mote-linux-sdl2</code> — SDL2</li>
+              <li><code>mote-linux-console</code> — TTY</li>
+              <li><code>mote-linux-fbdev</code> — /dev/fb0</li>
+            </ul>
           </div>
-          <p class="platforms">
-            Linux · Windows · исходники:
-            <a id="gh-src" href="#">mote</a>
-          </p>
-        </td>
-      </tr>
+        </div>
+        <div class="os-panel" data-panel="windows" hidden>
+          <div class="os-card os-windows">
+            <h3 data-i18n="win_h">Windows</h3>
+            <p data-i18n="win_p">GDI‑окно и отдельная консольная сборка.</p>
+            <ul class="os-list">
+              <li><code>mote-windows-gui.exe</code> — GUI</li>
+              <li><code>mote-windows-console.exe</code> — console</li>
+            </ul>
+          </div>
+        </div>
+        <div class="os-panel" data-panel="dos" hidden>
+          <div class="os-card os-dos">
+            <h3 data-i18n="dos_h">DOS</h3>
+            <p data-i18n="dos_p">FreeDOS / DOSBox, сборка DJGPP, текстовый VGA.</p>
+            <ul class="os-list">
+              <li><code>mote-dos.exe</code></li>
+            </ul>
+          </div>
+        </div>
+        <div class="os-panel" data-panel="web" hidden>
+          <div class="os-card os-web">
+            <h3 data-i18n="web_h">WebAssembly</h3>
+            <p data-i18n="web_p">Откройте mote.html через локальный HTTP‑сервер (нужны .js/.wasm/.data).</p>
+            <ul class="os-list">
+              <li><code>mote.html</code> + <code>mote.js</code> + <code>mote.wasm</code> + <code>mote.data</code></li>
+            </ul>
+          </div>
+        </div>
 
-      <tr>
-        <td class="footer" colspan="2">
-          <hr noshade size="1" />
-          mote by SYFaren ·
-          <a id="gh-site" href="#">site source</a>
-          · best viewed at 1024×768 ·
-          <span class="hit">screenshots: real, not AI</span>
-        </td>
-      </tr>
-    </table>
-  </center>
+        <p class="zip-line">
+          <span data-i18n="zip_note">Или всё сразу по папкам:</span>
+          <strong>mote-all-platforms.zip</strong>
+        </p>
+
+        <div id="assets" class="assets">
+          <p class="loading" data-i18n="loading">Загрузка релизов…</p>
+        </div>
+      </section>
+
+      <section id="gallery" class="block">
+        <h2 data-i18n="gal_title">Скриншоты</h2>
+        <p class="hint" data-i18n="gal_hint">По одному кадру на бэкенд выбранной системы. Нажмите, чтобы увеличить.</p>
+        <div id="gallery-grid" class="gallery-grid"></div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span>mote · SYFaren</span>
+      · <a id="gh-site" href="#" data-i18n="site_src">исходники сайта</a>
+      · <span class="hit" data-i18n="real_shots">реальные скриншоты</span>
+    </footer>
+  </div>
 
   <div id="lightbox" class="lightbox" hidden>
     <div class="lb-inner">
       <p id="lb-cap" class="lb-cap"></p>
       <img id="lb-img" src="" alt="" />
-      <p><a href="#" id="lb-close">[ close ]</a></p>
+      <p><a href="#" id="lb-close" data-i18n="close">[ закрыть ]</a></p>
     </div>
   </div>
 
