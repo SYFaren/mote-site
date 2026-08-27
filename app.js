@@ -10,19 +10,18 @@
   var I18N = {
     ru: {
       tag: "крошечный редактор · SYFaren",
-      nav_try: "В браузере",
+      nav_try: "Онлайн",
       nav_dl: "Скачать",
       nav_shots: "Скриншоты",
       hero_title: "Один C89‑core — много платформ",
       hero_lead:
         "Linux, Windows, DOS и браузер. Оверлей выбирается при сборке; ядро остаётся общим и компактным.",
-      cta_try: "Открыть в браузере",
       cta_dl: "Скачать",
       cta_rel: "Releases",
-      try_title: "В браузере",
-      try_hint: "WASM‑сборка mote. Нажмите «Запустить», затем кликните по редактору.",
+      try_title: "Онлайн‑редактор",
+      try_hint: "Тот же mote, собранный в WebAssembly.",
       try_start: "Запустить",
-      try_full: "Открыть отдельно",
+      try_full: "Отдельная вкладка",
       dl_title: "Скачать",
       dl_hint: "Выберите систему — покажем только нужные файлы из GitHub Releases.",
       linux_h: "Linux / Unix",
@@ -50,19 +49,18 @@
     },
     en: {
       tag: "tiny multi-platform editor · SYFaren",
-      nav_try: "In browser",
+      nav_try: "Online",
       nav_dl: "Download",
       nav_shots: "Screenshots",
       hero_title: "One C89 core — many platforms",
       hero_lead:
         "Linux, Windows, DOS and the browser. Pick an overlay at build time; the core stays shared and tiny.",
-      cta_try: "Open in browser",
       cta_dl: "Download",
       cta_rel: "Releases",
-      try_title: "In browser",
-      try_hint: "WASM build of mote. Press Start, then click the editor.",
+      try_title: "Online editor",
+      try_hint: "The same mote, built as WebAssembly.",
       try_start: "Start",
-      try_full: "Open separately",
+      try_full: "Open in a tab",
       dl_title: "Download",
       dl_hint: "Pick an OS — we filter GitHub Release assets for you.",
       linux_h: "Linux / Unix",
@@ -118,7 +116,9 @@
   function applyI18n() {
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       var key = el.getAttribute("data-i18n");
-      if (key && t(key)) el.textContent = t(key);
+      var val = key ? t(key) : "";
+      /* Skip missing keys so a stale build never paints "try_title" literally. */
+      if (key && val && val !== key) el.textContent = val;
     });
     document.documentElement.lang = document.body.getAttribute("data-lang") || "ru";
     document.title = "mote — " + t("hero_title");
