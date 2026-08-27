@@ -15,9 +15,9 @@
         <span class="tag" data-i18n="tag">крошечный редактор · SYFaren</span>
       </div>
       <nav class="nav">
-        <a href="#try" data-i18n="nav_try">В браузере</a>
         <a href="#download" data-i18n="nav_dl">Скачать</a>
         <a href="#gallery" data-i18n="nav_shots">Скриншоты</a>
+        <a href="#try" data-i18n="nav_try">В браузере</a>
         <a id="gh-link" href="#">GitHub</a>
         <span class="lang">
           <button type="button" class="lang-btn is-on" data-lang="ru">RU</button>
@@ -34,29 +34,9 @@
           ядро остаётся крошечным и общим.
         </p>
         <div class="cta">
-          <a class="btn primary" href="#try" data-i18n="cta_try">Открыть в браузере</a>
-          <a class="btn" href="#download" data-i18n="cta_dl">Скачать</a>
+          <a class="btn primary" href="#download" data-i18n="cta_dl">Скачать</a>
           <a class="btn" id="gh-releases" href="#" data-i18n="cta_rel">Releases</a>
         </div>
-      </section>
-
-      <section id="try" class="block">
-        <h2 data-i18n="try_title">В браузере (WASM)</h2>
-        <p class="hint" data-i18n="try_hint">
-          Живая сборка mote на WebAssembly. Кликните по холсту и печатайте.
-        </p>
-        <div class="try-frame-wrap">
-          <iframe
-            class="try-frame"
-            title="mote wasm"
-            src="play/mote.html"
-            loading="lazy"
-            allow="autoplay"
-          ></iframe>
-        </div>
-        <p class="try-actions">
-          <a class="btn primary" href="play/mote.html" target="_blank" rel="noopener" data-i18n="try_full">На весь экран</a>
-        </p>
       </section>
 
       <section id="download" class="block">
@@ -128,6 +108,19 @@
         <h2 data-i18n="gal_title">Скриншоты</h2>
         <p class="hint" data-i18n="gal_hint">По одному кадру на бэкенд выбранной системы. Нажмите, чтобы увеличить.</p>
         <div id="gallery-grid" class="gallery-grid"></div>
+      </section>
+
+      <section id="try" class="block">
+        <h2 data-i18n="try_title">В браузере</h2>
+        <p class="hint" data-i18n="try_hint">
+          WASM‑сборка mote. Нажмите «Запустить», затем кликните по редактору.
+        </p>
+        <div class="try-frame-wrap" id="try-wrap">
+          <button type="button" class="try-start" id="try-start" data-i18n="try_start">Запустить</button>
+        </div>
+        <p class="try-actions">
+          <a class="btn" href="play/mote.html" target="_blank" rel="noopener" data-i18n="try_full">Открыть отдельно</a>
+        </p>
       </section>
     </main>
 

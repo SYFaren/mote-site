@@ -19,9 +19,10 @@
       cta_try: "Открыть в браузере",
       cta_dl: "Скачать",
       cta_rel: "Releases",
-      try_title: "В браузере (WASM)",
-      try_hint: "Живая сборка mote на WebAssembly. Кликните по холсту и печатайте.",
-      try_full: "На весь экран",
+      try_title: "В браузере",
+      try_hint: "WASM‑сборка mote. Нажмите «Запустить», затем кликните по редактору.",
+      try_start: "Запустить",
+      try_full: "Открыть отдельно",
       dl_title: "Скачать",
       dl_hint: "Выберите систему — покажем только нужные файлы из GitHub Releases.",
       linux_h: "Linux / Unix",
@@ -58,9 +59,10 @@
       cta_try: "Open in browser",
       cta_dl: "Download",
       cta_rel: "Releases",
-      try_title: "In browser (WASM)",
-      try_hint: "Live mote WebAssembly build. Click the canvas, then type.",
-      try_full: "Fullscreen",
+      try_title: "In browser",
+      try_hint: "WASM build of mote. Press Start, then click the editor.",
+      try_start: "Start",
+      try_full: "Open separately",
       dl_title: "Download",
       dl_hint: "Pick an OS — we filter GitHub Release assets for you.",
       linux_h: "Linux / Unix",
@@ -283,6 +285,21 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !lb.hidden) closeLb();
   });
+
+  (function setupTry() {
+    var btn = $("try-start");
+    var wrap = $("try-wrap");
+    if (!btn || !wrap) return;
+    btn.addEventListener("click", function () {
+      var frame = document.createElement("iframe");
+      frame.className = "try-frame";
+      frame.title = "mote wasm";
+      frame.src = "play/mote.html";
+      frame.allow = "autoplay";
+      wrap.innerHTML = "";
+      wrap.appendChild(frame);
+    });
+  })();
 
   document.querySelectorAll(".lang-btn").forEach(function (b) {
     b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });

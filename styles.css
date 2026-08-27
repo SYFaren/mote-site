@@ -152,10 +152,11 @@ body[data-os="dos"] .btn.primary {
 
 .try-frame-wrap {
   border: 2px solid var(--os-border);
-  background: #000;
+  background: #0a0a0a;
   overflow: hidden;
-  height: min(62vh, 520px);
-  min-height: 320px;
+  height: min(56vh, 480px);
+  min-height: 280px;
+  position: relative;
 }
 .try-frame {
   display: block;
@@ -163,6 +164,24 @@ body[data-os="dos"] .btn.primary {
   height: 100%;
   border: 0;
   background: #000;
+}
+.try-start {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: max-content;
+  height: max-content;
+  border: 2px solid var(--os-border);
+  background: var(--os-panel);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  padding: 10px 18px;
+  cursor: pointer;
+}
+.try-start:hover {
+  background: var(--os-accent);
+  color: #fff;
 }
 .try-actions {
   margin: 10px 0 0;
