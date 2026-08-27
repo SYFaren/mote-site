@@ -1,8 +1,10 @@
 # mote download site
 
-Landing page for [mote](https://github.com/SYFaren/mote): OS tabs, RU/EN, platform screenshots in `gallery/`.
+Landing page for [mote](https://github.com/SYFaren/mote): OS tabs, RU/EN,
+platform screenshots in `gallery/`, and a live WebAssembly editor in `play/`.
 
 - Live: [syfaren.github.io/mote-site](https://syfaren.github.io/mote-site/)
-- Open `index.html` locally, or enable GitHub Pages on `main` `/`.
+- Try: […/play/mote.html](https://syfaren.github.io/mote-site/play/mote.html)
 
-Assets are loaded from the latest GitHub Release of `SYFaren/mote`.
+Download assets come from the latest GitHub Release of `SYFaren/mote`
+(`mote-web.zip` for the offline WASM bundle).

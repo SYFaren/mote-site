@@ -15,6 +15,7 @@
         <span class="tag" data-i18n="tag">крошечный редактор · SYFaren</span>
       </div>
       <nav class="nav">
+        <a href="#try" data-i18n="nav_try">В браузере</a>
         <a href="#download" data-i18n="nav_dl">Скачать</a>
         <a href="#gallery" data-i18n="nav_shots">Скриншоты</a>
         <a id="gh-link" href="#">GitHub</a>
@@ -33,9 +34,29 @@
           ядро остаётся крошечным и общим.
         </p>
         <div class="cta">
-          <a class="btn primary" href="#download" data-i18n="cta_dl">Скачать</a>
+          <a class="btn primary" href="#try" data-i18n="cta_try">Открыть в браузере</a>
+          <a class="btn" href="#download" data-i18n="cta_dl">Скачать</a>
           <a class="btn" id="gh-releases" href="#" data-i18n="cta_rel">Releases</a>
         </div>
+      </section>
+
+      <section id="try" class="block">
+        <h2 data-i18n="try_title">В браузере (WASM)</h2>
+        <p class="hint" data-i18n="try_hint">
+          Живая сборка mote на WebAssembly. Кликните по холсту и печатайте.
+        </p>
+        <div class="try-frame-wrap">
+          <iframe
+            class="try-frame"
+            title="mote wasm"
+            src="play/mote.html"
+            loading="lazy"
+            allow="autoplay"
+          ></iframe>
+        </div>
+        <p class="try-actions">
+          <a class="btn primary" href="play/mote.html" target="_blank" rel="noopener" data-i18n="try_full">На весь экран</a>
+        </p>
       </section>
 
       <section id="download" class="block">
@@ -86,9 +107,9 @@
         <div class="os-panel" data-panel="web" hidden>
           <div class="os-card os-web">
             <h3 data-i18n="web_h">WebAssembly</h3>
-            <p data-i18n="web_p">Откройте mote.html через локальный HTTP‑сервер (нужны .js/.wasm/.data).</p>
+            <p data-i18n="web_p">Один архив mote-web.zip: распакуйте и откройте mote.html через локальный HTTP‑сервер.</p>
             <ul class="os-list">
-              <li><code>mote.html</code> + <code>mote.js</code> + <code>mote.wasm</code> + <code>mote.data</code></li>
+              <li><code>mote-web.zip</code> — html + js + wasm + data</li>
             </ul>
           </div>
         </div>

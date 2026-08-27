@@ -10,13 +10,18 @@
   var I18N = {
     ru: {
       tag: "крошечный редактор · SYFaren",
+      nav_try: "В браузере",
       nav_dl: "Скачать",
       nav_shots: "Скриншоты",
       hero_title: "Один C89‑core — много платформ",
       hero_lead:
         "Linux, Windows, DOS и браузер. Оверлей выбирается при сборке; ядро остаётся общим и компактным.",
+      cta_try: "Открыть в браузере",
       cta_dl: "Скачать",
       cta_rel: "Releases",
+      try_title: "В браузере (WASM)",
+      try_hint: "Живая сборка mote на WebAssembly. Кликните по холсту и печатайте.",
+      try_full: "На весь экран",
       dl_title: "Скачать",
       dl_hint: "Выберите систему — покажем только нужные файлы из GitHub Releases.",
       linux_h: "Linux / Unix",
@@ -26,7 +31,7 @@
       dos_h: "DOS",
       dos_p: "FreeDOS / DOSBox, сборка DJGPP, текстовый VGA.",
       web_h: "WebAssembly",
-      web_p: "Откройте mote.html через локальный HTTP‑сервер (нужны .js / .wasm / .data).",
+      web_p: "Один архив mote-web.zip: распакуйте и откройте mote.html через локальный HTTP‑сервер.",
       zip_note: "Или всё сразу по папкам:",
       loading: "Загрузка релизов…",
       gal_title: "Скриншоты",
@@ -37,19 +42,25 @@
       no_assets: "Для этой системы в релизе пока нет файлов.",
       open_rel: "Открыть Releases",
       all_zip: "★ Все платформы (zip)",
+      web_zip: "★ WebAssembly (zip)",
       checksums: "Контрольные суммы SHA256",
       packed: "упакованный",
       fetch_err: "Не удалось загрузить релиз."
     },
     en: {
       tag: "tiny multi-platform editor · SYFaren",
+      nav_try: "In browser",
       nav_dl: "Download",
       nav_shots: "Screenshots",
       hero_title: "One C89 core — many platforms",
       hero_lead:
         "Linux, Windows, DOS and the browser. Pick an overlay at build time; the core stays shared and tiny.",
+      cta_try: "Open in browser",
       cta_dl: "Download",
       cta_rel: "Releases",
+      try_title: "In browser (WASM)",
+      try_hint: "Live mote WebAssembly build. Click the canvas, then type.",
+      try_full: "Fullscreen",
       dl_title: "Download",
       dl_hint: "Pick an OS — we filter GitHub Release assets for you.",
       linux_h: "Linux / Unix",
@@ -59,7 +70,7 @@
       dos_h: "DOS",
       dos_p: "FreeDOS / DOSBox, DJGPP build, VGA text mode.",
       web_h: "WebAssembly",
-      web_p: "Open mote.html via a local HTTP server (.js / .wasm / .data required).",
+      web_p: "One archive mote-web.zip: unpack and open mote.html via a local HTTP server.",
       zip_note: "Or everything in folders:",
       loading: "Loading releases…",
       gal_title: "Screenshots",
@@ -70,6 +81,7 @@
       no_assets: "No assets for this OS in the latest release yet.",
       open_rel: "Open Releases",
       all_zip: "★ All platforms (zip)",
+      web_zip: "★ WebAssembly (zip)",
       checksums: "SHA256 checksums",
       packed: "packed",
       fetch_err: "Could not load the release."
@@ -145,7 +157,8 @@
     if (n.indexOf("all-platforms") >= 0 || n === "sha256sums") return "all";
     if (n.indexOf("windows") >= 0 || /\.exe$/.test(n) && n.indexOf("dos") < 0) return "windows";
     if (n.indexOf("dos") >= 0) return "dos";
-    if (n.indexOf(".wasm") >= 0 || n === "mote.html" || n === "mote.js" || n === "mote.data")
+    if (n === "mote-web.zip" || n.indexOf(".wasm") >= 0 ||
+        n === "mote.html" || n === "mote.js" || n === "mote.data")
       return "web";
     if (n.indexOf("linux") >= 0 || n.indexOf("wayland") >= 0 || n.indexOf("sdl") >= 0 ||
         n.indexOf("fbdev") >= 0 || n.indexOf("console") >= 0 && n.indexOf("win") < 0)
@@ -156,6 +169,7 @@
   function labelFor(name) {
     var n = name.toLowerCase();
     if (n.indexOf("all-platforms") >= 0) return t("all_zip");
+    if (n === "mote-web.zip") return t("web_zip");
     if (n === "sha256sums") return t("checksums");
     if (n.indexOf("wayland") >= 0) return "Linux · Wayland";
     if (n.indexOf("sdl3") >= 0) return "Linux · SDL3";
@@ -175,7 +189,8 @@
   function rank(name) {
     var n = name.toLowerCase();
     if (n.indexOf("all-platforms") >= 0) return 0;
-    if (n === "sha256sums") return 1;
+    if (n === "mote-web.zip") return 2;
+    if (n === "sha256sums") return 3;
     if (n.indexOf("upx") >= 0) return 80;
     return 10;
   }
@@ -212,7 +227,8 @@
     list.forEach(function (a) {
       var row = document.createElement("div");
       row.className = "asset";
-      if (a.name.toLowerCase().indexOf("all-platforms") >= 0) row.className += " asset-star";
+      if (a.name.toLowerCase().indexOf("all-platforms") >= 0 ||
+          a.name.toLowerCase() === "mote-web.zip") row.className += " asset-star";
       row.innerHTML =
         "<div><div class=\"name\">" + labelFor(a.name) + "</div>" +
         "<div class=\"meta\">" + a.name + " · " + fmtSize(a.size) + "</div></div>" +

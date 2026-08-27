@@ -150,6 +150,27 @@ body[data-os="dos"] .btn.primary {
   color: #1a1000 !important;
 }
 
+.try-frame-wrap {
+  border: 2px solid var(--os-border);
+  background: #000;
+  overflow: hidden;
+  height: min(62vh, 520px);
+  min-height: 320px;
+}
+.try-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+.try-actions {
+  margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .block { margin: 22px 0 10px; }
 .block h2 {
   margin: 0 0 6px;
