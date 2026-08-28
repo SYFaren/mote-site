@@ -7,7 +7,7 @@
   <meta name="description" content="mote — compact multi-platform C89 text editor" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-os="linux" data-lang="ru">
+<body data-os="linux" data-lang="ru" data-arch="amd64">
   <div class="shell">
     <header class="top">
       <div class="brand">
@@ -52,16 +52,28 @@
           <button type="button" class="os-tab" data-os="web" role="tab">Web</button>
         </div>
 
+        <div id="arch-row" class="arch-row" data-for="linux">
+          <span class="arch-label">CPU:</span>
+          <button type="button" class="arch-tab is-on" data-arch="amd64" data-for-os="linux">x86_64</button>
+          <button type="button" class="arch-tab" data-arch="arm64" data-for-os="linux">ARM64</button>
+          <button type="button" class="arch-tab" data-arch="armhf" data-for-os="linux">ARMv7</button>
+          <button type="button" class="arch-tab" data-arch="i686" data-for-os="linux">i686</button>
+          <button type="button" class="arch-tab" data-arch="riscv64" data-for-os="linux">RISC-V</button>
+          <button type="button" class="arch-tab is-on" data-arch="amd64" data-for-os="windows" hidden>x86_64</button>
+          <button type="button" class="arch-tab" data-arch="i686" data-for-os="windows" hidden>i686</button>
+        </div>
+
         <div class="os-panel" data-panel="linux">
           <div class="os-card os-linux">
             <h3 data-i18n="linux_h">Linux / Unix</h3>
             <p data-i18n="linux_p">X11, Wayland, SDL2, консоль TTY и framebuffer.</p>
-            <ul class="os-list">
-              <li><code>mote-linux-x11</code> — X11 GUI</li>
-              <li><code>mote-linux-wayland</code> — Wayland</li>
-              <li><code>mote-linux-sdl2</code> — SDL2</li>
-              <li><code>mote-linux-console</code> — TTY</li>
-              <li><code>mote-linux-fbdev</code> — /dev/fb0</li>
+            <ul class="os-list arch-hints">
+              <li data-arch-hint="amd64"><code>mote-linux-x11</code> — <span data-i18n="linux_amd64">x86_64</span></li>
+              <li data-arch-hint="amd64"><code>mote-linux-wayland</code> · <code>mote-linux-sdl2</code> · <code>mote-linux-console</code> · <code>mote-linux-fbdev</code></li>
+              <li data-arch-hint="arm64"><code>mote-linux-arm64-{console,x11,sdl}</code></li>
+              <li data-arch-hint="armhf"><code>mote-linux-armhf-{console,x11,sdl}</code></li>
+              <li data-arch-hint="i686"><code>mote-linux-i686-{console,x11,sdl}</code></li>
+              <li data-arch-hint="riscv64"><code>mote-linux-riscv64-console</code></li>
             </ul>
           </div>
         </div>
@@ -69,9 +81,9 @@
           <div class="os-card os-windows">
             <h3 data-i18n="win_h">Windows</h3>
             <p data-i18n="win_p">GDI‑окно и отдельная консольная сборка.</p>
-            <ul class="os-list">
-              <li><code>mote-windows-gui.exe</code> — GUI</li>
-              <li><code>mote-windows-console.exe</code> — console</li>
+            <ul class="os-list arch-hints">
+              <li data-arch-hint="amd64"><code>mote-windows-gui.exe</code> · <code>mote-windows-console.exe</code></li>
+              <li data-arch-hint="i686"><code>mote-windows-i686-gui.exe</code> · <code>mote-windows-i686-console.exe</code></li>
             </ul>
           </div>
         </div>
@@ -97,6 +109,7 @@
         <p class="zip-line">
           <span data-i18n="zip_note">Или всё сразу по папкам:</span>
           <strong>mote-all-platforms.zip</strong>
+          <span class="zip-tree"><code>by-platform/linux/&lt;arch&gt;/…</code> · <code>windows/&lt;arch&gt;/…</code> · <code>dos/i686</code> · <code>web/wasm</code></span>
         </p>
 
         <div id="assets" class="assets">

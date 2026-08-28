@@ -207,6 +207,52 @@ body[data-os="dos"] .hint { color: #c9a35a; }
   gap: 6px;
   margin: 0 0 12px;
 }
+
+.arch-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 14px;
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--os-panel) 85%, transparent);
+  border: 1px solid var(--os-border);
+}
+.arch-row[hidden] { display: none; }
+.arch-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--os-accent);
+  margin-right: 4px;
+}
+.arch-tab {
+  border: 1px solid var(--line);
+  background: var(--chip);
+  padding: 4px 10px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.arch-tab.is-on {
+  background: var(--os-accent);
+  color: #fff;
+  border-color: var(--os-accent);
+}
+.arch-tab[hidden] { display: none; }
+
+.zip-tree {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-family: var(--mono);
+  color: color-mix(in srgb, var(--ink) 65%, transparent);
+}
+body[data-os="dos"] .zip-tree { color: #a08040; }
+
+.os-list [data-arch-hint][hidden] { display: none; }
 .os-tab {
   border: 2px solid var(--line);
   background: var(--chip);

@@ -25,9 +25,16 @@
       dl_title: "Скачать",
       dl_hint: "Выберите систему — покажем только нужные файлы из GitHub Releases.",
       linux_h: "Linux / Unix",
-      linux_p: "X11, Wayland, SDL2, консоль TTY и framebuffer.",
+      linux_p: "X11, Wayland, SDL2, консоль TTY и framebuffer. Выберите CPU ниже.",
+      linux_amd64: "x86_64 — обычный ПК / сервер",
+      linux_arm64: "ARM64 — Raspberry Pi 4+, Apple Silicon Linux, ARM‑серверы",
+      linux_armhf: "ARMv7 — Raspberry Pi 2/3 (32‑bit)",
+      linux_i686: "i686 — старые 32‑bit PC",
+      linux_riscv64: "RISC‑V 64 — экспериментальная консоль",
       win_h: "Windows",
-      win_p: "GDI‑окно и отдельная консольная сборка.",
+      win_p: "GDI‑окно и отдельная консольная сборка. x86_64 и i686.",
+      win_amd64: "64‑bit Windows",
+      win_i686: "32‑bit Windows",
       dos_h: "DOS",
       dos_p: "FreeDOS / DOSBox, сборка DJGPP, текстовый VGA.",
       web_h: "WebAssembly",
@@ -64,9 +71,16 @@
       dl_title: "Download",
       dl_hint: "Pick an OS — we filter GitHub Release assets for you.",
       linux_h: "Linux / Unix",
-      linux_p: "X11, Wayland, SDL2, TTY console and framebuffer.",
+      linux_p: "X11, Wayland, SDL2, TTY console and framebuffer. Pick your CPU below.",
+      linux_amd64: "x86_64 — desktop PC / server",
+      linux_arm64: "ARM64 — Raspberry Pi 4+, ARM Linux SBCs",
+      linux_armhf: "ARMv7 — Raspberry Pi 2/3 (32-bit)",
+      linux_i686: "i686 — legacy 32-bit PC",
+      linux_riscv64: "RISC-V 64 — console only",
       win_h: "Windows",
-      win_p: "GDI window plus a dedicated console build.",
+      win_p: "GDI window plus console build. x86_64 and i686.",
+      win_amd64: "64-bit Windows",
+      win_i686: "32-bit Windows",
       dos_h: "DOS",
       dos_p: "FreeDOS / DOSBox, DJGPP build, VGA text mode.",
       web_h: "WebAssembly",
@@ -143,8 +157,33 @@
     document.querySelectorAll(".os-panel").forEach(function (p) {
       p.hidden = p.getAttribute("data-panel") !== os;
     });
+    var archRow = $("arch-row");
+    if (archRow) {
+      archRow.hidden = os !== "linux" && os !== "windows";
+      archRow.setAttribute("data-for", os);
+    }
+    document.querySelectorAll(".arch-tab").forEach(function (b) {
+      var forOs = b.getAttribute("data-for-os");
+      b.hidden = forOs && forOs !== os;
+    });
+    if (os === "windows") {
+      var cur = document.body.getAttribute("data-arch") || "amd64";
+      if (cur !== "amd64" && cur !== "i686") setArch("amd64");
+    }
     try { localStorage.setItem("mote-os", os); } catch (e) {}
     renderGallery();
+    if (window.__MOTE_RELEASE) renderAssets(window.__MOTE_RELEASE);
+  }
+
+  function setArch(arch) {
+    document.body.setAttribute("data-arch", arch);
+    document.querySelectorAll(".arch-tab").forEach(function (b) {
+      b.classList.toggle("is-on", b.getAttribute("data-arch") === arch);
+    });
+    document.querySelectorAll("[data-arch-hint]").forEach(function (el) {
+      el.hidden = el.getAttribute("data-arch-hint") !== arch;
+    });
+    try { localStorage.setItem("mote-arch", arch); } catch (e) {}
     if (window.__MOTE_RELEASE) renderAssets(window.__MOTE_RELEASE);
   }
 
@@ -157,31 +196,64 @@
   function assetOs(name) {
     var n = name.toLowerCase();
     if (n.indexOf("all-platforms") >= 0 || n === "sha256sums") return "all";
-    if (n.indexOf("windows") >= 0 || /\.exe$/.test(n) && n.indexOf("dos") < 0) return "windows";
+    if (n.indexOf("windows") >= 0 || (/\.exe$/.test(n) && n.indexOf("dos") < 0)) return "windows";
     if (n.indexOf("dos") >= 0) return "dos";
     if (n === "mote-web.zip" || n.indexOf(".wasm") >= 0 ||
         n === "mote.html" || n === "mote.js" || n === "mote.data")
       return "web";
     if (n.indexOf("linux") >= 0 || n.indexOf("wayland") >= 0 || n.indexOf("sdl") >= 0 ||
-        n.indexOf("fbdev") >= 0 || n.indexOf("console") >= 0 && n.indexOf("win") < 0)
+        n.indexOf("fbdev") >= 0 || (n.indexOf("console") >= 0 && n.indexOf("win") < 0))
       return "linux";
     return "other";
   }
 
+  function assetArch(name, os) {
+    var n = name.toLowerCase();
+    if (os === "dos") return "i686";
+    if (os === "web" || os === "all") return "any";
+    var m = n.match(/^mote-(?:linux|windows)-(i686|arm64|armhf|riscv64)-/);
+    if (m) return m[1];
+    if (os === "linux" || os === "windows") return "amd64";
+    return "any";
+  }
+
+  var BACKEND_LABEL = {
+    console: { ru: "консоль TTY", en: "TTY console" },
+    x11: { ru: "X11 GUI", en: "X11 GUI" },
+    sdl: { ru: "SDL2 GUI", en: "SDL2 GUI" },
+    sdl2: { ru: "SDL2 GUI", en: "SDL2 GUI" },
+    wayland: { ru: "Wayland", en: "Wayland" },
+    fbdev: { ru: "framebuffer", en: "framebuffer" },
+    gui: { ru: "GUI", en: "GUI" },
+    winconsole: { ru: "консоль", en: "console" }
+  };
+
   function labelFor(name) {
+    var lang = document.body.getAttribute("data-lang") || "ru";
     var n = name.toLowerCase();
     if (n.indexOf("all-platforms") >= 0) return t("all_zip");
     if (n === "mote-web.zip") return t("web_zip");
     if (n === "sha256sums") return t("checksums");
-    if (n.indexOf("wayland") >= 0) return "Linux · Wayland";
-    if (n.indexOf("sdl3") >= 0) return "Linux · SDL3";
-    if (n.indexOf("sdl2") >= 0 || n.indexOf("sdl") >= 0) return "Linux · SDL2";
-    if (n.indexOf("fbdev") >= 0) return "Linux · framebuffer";
-    if (n.indexOf("x11") >= 0) return "Linux · X11";
-    if (n.indexOf("console") >= 0 && n.indexOf("windows") < 0) return "Unix · console";
-    if (n.indexOf("windows-gui") >= 0) return "Windows · GUI";
-    if (n.indexOf("windows-console") >= 0) return "Windows · console";
-    if (n.indexOf("dos") >= 0) return "DOS";
+
+    var m = n.match(/^mote-(linux|windows)-(i686|arm64|armhf|riscv64|amd64)-([a-z0-9]+)/);
+    if (m) {
+      var os = m[1], arch = m[2], be = m[3];
+      if (be === "console" && os === "windows") be = "winconsole";
+      var bl = BACKEND_LABEL[be];
+      var bt = bl ? (lang === "ru" ? bl.ru : bl.en) : be;
+      return (os === "linux" ? "Linux" : "Windows") + " · " + arch + " · " + bt;
+    }
+
+    if (n.indexOf("wayland") >= 0) return "Linux · amd64 · Wayland";
+    if (n.indexOf("sdl3") >= 0) return "Linux · amd64 · SDL3";
+    if (n.indexOf("sdl2") >= 0 || (n.indexOf("sdl") >= 0 && n.indexOf("linux") >= 0))
+      return "Linux · amd64 · SDL2";
+    if (n.indexOf("fbdev") >= 0) return "Linux · amd64 · framebuffer";
+    if (n.indexOf("x11") >= 0) return "Linux · amd64 · X11";
+    if (n.indexOf("console") >= 0 && n.indexOf("windows") < 0) return "Linux · amd64 · TTY";
+    if (n.indexOf("windows-gui") >= 0) return "Windows · amd64 · GUI";
+    if (n.indexOf("windows-console") >= 0) return "Windows · amd64 · console";
+    if (n.indexOf("dos") >= 0) return "DOS · i686";
     if (n.indexOf("html") >= 0 || n.indexOf("wasm") >= 0 || n === "mote.js" || n === "mote.data")
       return "Web · " + name;
     if (n.indexOf("upx") >= 0) return name + " (" + t("packed") + ")";
@@ -194,12 +266,19 @@
     if (n === "mote-web.zip") return 2;
     if (n === "sha256sums") return 3;
     if (n.indexOf("upx") >= 0) return 80;
+    if (n.indexOf("-console") >= 0) return 11;
+    if (n.indexOf("-x11") >= 0) return 12;
+    if (n.indexOf("-sdl") >= 0) return 13;
+    if (n.indexOf("-wayland") >= 0) return 14;
+    if (n.indexOf("-fbdev") >= 0) return 15;
+    if (n.indexOf("-gui") >= 0) return 11;
     return 10;
   }
 
   function renderAssets(release) {
     var box = $("assets");
     var os = document.body.getAttribute("data-os") || "linux";
+    var arch = document.body.getAttribute("data-arch") || "amd64";
     box.innerHTML = "";
     if (!release || !release.assets || !release.assets.length) {
       box.innerHTML =
@@ -215,8 +294,12 @@
     box.appendChild(head);
 
     var list = release.assets.filter(function (a) {
-      var o = assetOs(a.name);
-      return o === os || o === "all";
+      var ao = assetOs(a.name);
+      if (ao === "all") return true;
+      if (ao !== os) return false;
+      if (os === "linux" || os === "windows")
+        return assetArch(a.name, os) === arch;
+      return true;
     }).sort(function (a, b) {
       return rank(a.name) - rank(b.name) || a.name.localeCompare(b.name);
     });
@@ -307,14 +390,20 @@
   document.querySelectorAll(".os-tab").forEach(function (b) {
     b.addEventListener("click", function () { setOs(b.getAttribute("data-os")); });
   });
+  document.querySelectorAll(".arch-tab").forEach(function (b) {
+    b.addEventListener("click", function () { setArch(b.getAttribute("data-arch")); });
+  });
 
   var savedLang = "ru";
   var savedOs = "linux";
+  var savedArch = "amd64";
   try {
     savedLang = localStorage.getItem("mote-lang") || savedLang;
     savedOs = localStorage.getItem("mote-os") || savedOs;
+    savedArch = localStorage.getItem("mote-arch") || savedArch;
   } catch (e) {}
   setLang(savedLang);
+  setArch(savedArch);
   setOs(savedOs);
 
   fetch(api, { headers: { Accept: "application/vnd.github+json" } })
