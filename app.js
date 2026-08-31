@@ -34,6 +34,11 @@
       freebsd_p: "amd64: console, X11 и SDL2.",
       openbsd_h: "OpenBSD",
       openbsd_p: "amd64: console, X11 и SDL2.",
+      linux_riscv64: "RISC‑V 64 — console, x11, sdl",
+      linux_libc: "libc:",
+      linux_libc_glibc: "glibc",
+      linux_libc_musl: "musl (static)",
+      linux_musl_p: "Статические musl-сборки: console на всех arch, fbdev на amd64.",
       bsd_flavor: "Дистрибутив:",
       win_h: "Windows",
       win_p: "GDI‑окно и отдельная консольная сборка. x86_64 и i686.",
@@ -83,6 +88,11 @@
       freebsd_p: "amd64: console, X11 and SDL2.",
       openbsd_h: "OpenBSD",
       openbsd_p: "amd64: console, X11 and SDL2.",
+      linux_riscv64: "RISC-V 64 — console, x11, sdl",
+      linux_libc: "libc:",
+      linux_libc_glibc: "glibc",
+      linux_libc_musl: "musl (static)",
+      linux_musl_p: "Static musl builds: console on all arches, amd64 fbdev.",
       bsd_flavor: "Flavor:",
       win_h: "Windows",
       win_p: "GDI window plus console build. x86_64 and i686.",
@@ -183,6 +193,8 @@
       archRow.hidden = os !== "linux" && os !== "windows";
       archRow.setAttribute("data-for", os);
     }
+    var libcRow = $("libc-row");
+    if (libcRow) libcRow.hidden = os !== "linux";
     var bsdRow = $("bsd-row");
     if (bsdRow) bsdRow.hidden = os !== "bsd";
     document.querySelectorAll(".arch-tab").forEach(function (b) {
@@ -195,6 +207,18 @@
     }
     try { localStorage.setItem("mote-os", os); } catch (e) {}
     renderGallery();
+    if (window.__MOTE_RELEASE) renderAssets(window.__MOTE_RELEASE);
+  }
+
+  function setLibc(libc) {
+    document.body.setAttribute("data-libc", libc);
+    document.querySelectorAll(".libc-tab").forEach(function (b) {
+      b.classList.toggle("is-on", b.getAttribute("data-libc") === libc);
+    });
+    document.querySelectorAll("[data-libc-hint]").forEach(function (el) {
+      el.hidden = el.getAttribute("data-libc-hint") !== libc;
+    });
+    try { localStorage.setItem("mote-libc", libc); } catch (e) {}
     if (window.__MOTE_RELEASE) renderAssets(window.__MOTE_RELEASE);
   }
 
@@ -240,15 +264,25 @@
     });
 
     var m = stem.match(
-      /^mote-(macos|freebsd|openbsd|netbsd|linux|windows|dos)-(?:(i686|arm64|armhf|riscv64|amd64)-)?([a-z0-9]+)(\.exe)?$/i
+      /^mote-(macos|freebsd|openbsd|netbsd|linux|windows|dos)-(?:(i686|arm64|armhf|riscv64|amd64)-)?(?:(musl)-)?([a-z0-9]+)(\.exe)?$/i
     );
     if (m) {
       var os = m[1].toLowerCase();
       var arch = m[2] ? m[2].toLowerCase() : (os === "dos" ? "i686" : "amd64");
-      var backend = m[3].toLowerCase();
+      var libc = m[3] ? m[3].toLowerCase() : "glibc";
+      var backend = m[4].toLowerCase();
       if (backend === "sdl") backend = "sdl2";
       if (backend === "console" && os === "windows") backend = "winconsole";
-      return { kind: "bin", os: os, arch: arch, backend: backend, upx: isUpx, key: os + "|" + arch + "|" + backend };
+      return { kind: "bin", os: os, arch: arch, libc: libc, backend: backend, upx: isUpx,
+        key: os + "|" + arch + "|" + libc + "|" + backend };
+    }
+
+    m = stem.match(/^mote-linux-musl-(console|fbdev)$/i);
+    if (m) {
+      return {
+        kind: "bin", os: "linux", arch: "amd64", libc: "musl", backend: m[1].toLowerCase(),
+        upx: isUpx, key: "linux|amd64|musl|" + m[1].toLowerCase(), legacy: true
+      };
     }
 
     m = stem.match(/^mote-linux-(console|x11|sdl2|sdl3|wayland|fbdev)$/i);
@@ -257,9 +291,10 @@
         kind: "bin",
         os: "linux",
         arch: "amd64",
+        libc: "glibc",
         backend: m[1].toLowerCase(),
         upx: isUpx,
-        key: "linux|amd64|" + m[1].toLowerCase(),
+        key: "linux|amd64|glibc|" + m[1].toLowerCase(),
         legacy: true
       };
     }
@@ -271,9 +306,10 @@
         kind: "bin",
         os: "windows",
         arch: "amd64",
+        libc: "glibc",
         backend: be,
         upx: isUpx,
-        key: "windows|amd64|" + be,
+        key: "windows|amd64|glibc|" + be,
         legacy: true
       };
     }
@@ -290,7 +326,7 @@
     return parsed.os;
   }
 
-  function matchesFilter(parsed, os, arch, bsd) {
+  function matchesFilter(parsed, os, arch, bsd, libc) {
     if (parsed.kind === "meta") {
       if (parsed.id === "all") return true;
       if (parsed.id === "sha256") return true;
@@ -298,7 +334,11 @@
       return false;
     }
     if (osTabFor(parsed) !== os) return false;
-    if (os === "linux" || os === "windows") return parsed.arch === arch;
+    if (os === "linux") {
+      if (parsed.arch !== arch) return false;
+      return (parsed.libc || "glibc") === libc;
+    }
+    if (os === "windows") return parsed.arch === arch;
     if (os === "bsd") return parsed.os === bsd;
     return true;
   }
@@ -351,6 +391,7 @@
     var os = document.body.getAttribute("data-os") || "linux";
     var arch = document.body.getAttribute("data-arch") || "amd64";
     var bsd = document.body.getAttribute("data-bsd") || "freebsd";
+    var libc = document.body.getAttribute("data-libc") || "glibc";
     box.innerHTML = "";
     if (!release || !release.assets || !release.assets.length) {
       box.innerHTML =
@@ -369,7 +410,7 @@
     var items = release.assets.map(function (a) {
       return { asset: a, parsed: parseAsset(a.name) };
     }).filter(function (it) {
-      return it.parsed && matchesFilter(it.parsed, os, arch, bsd);
+      return it.parsed && matchesFilter(it.parsed, os, arch, bsd, libc);
     });
     items = hideLegacyDuplicates(items);
 
@@ -532,6 +573,10 @@
     b.addEventListener("click", function () { setArch(b.getAttribute("data-arch")); });
   });
 
+  document.querySelectorAll(".libc-tab").forEach(function (b) {
+    b.addEventListener("click", function () { setLibc(b.getAttribute("data-libc")); });
+  });
+
   document.querySelectorAll(".bsd-tab").forEach(function (b) {
     b.addEventListener("click", function () { setBsd(b.getAttribute("data-bsd")); });
   });
@@ -540,14 +585,17 @@
   var savedOs = "linux";
   var savedArch = "amd64";
   var savedBsd = "freebsd";
+  var savedLibc = "glibc";
   try {
     savedLang = localStorage.getItem("mote-lang") || savedLang;
     savedOs = localStorage.getItem("mote-os") || savedOs;
     savedArch = localStorage.getItem("mote-arch") || savedArch;
     savedBsd = localStorage.getItem("mote-bsd") || savedBsd;
+    savedLibc = localStorage.getItem("mote-libc") || savedLibc;
   } catch (e) {}
   setLang(savedLang);
   setArch(savedArch);
+  setLibc(savedLibc);
   setBsd(savedBsd);
   setOs(savedOs);
 

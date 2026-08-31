@@ -7,7 +7,7 @@
   <meta name="description" content="mote — compact multi-platform C89 text editor" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-os="linux" data-lang="ru" data-arch="amd64" data-bsd="freebsd">
+<body data-os="linux" data-lang="ru" data-arch="amd64" data-bsd="freebsd" data-libc="glibc">
   <div class="shell">
     <header class="top">
       <div class="brand">
@@ -64,6 +64,12 @@
           <button type="button" class="arch-tab" data-arch="i686" data-for-os="windows" hidden>i686</button>
         </div>
 
+        <div id="libc-row" class="arch-row libc-row" hidden>
+          <span class="arch-label" data-i18n="linux_libc">libc:</span>
+          <button type="button" class="libc-tab is-on" data-libc="glibc" data-i18n="linux_libc_glibc">glibc</button>
+          <button type="button" class="libc-tab" data-libc="musl" data-i18n="linux_libc_musl">musl (static)</button>
+        </div>
+
         <div id="bsd-row" class="arch-row bsd-row" hidden>
           <span class="arch-label" data-i18n="bsd_flavor">Дистрибутив:</span>
           <button type="button" class="bsd-tab is-on" data-bsd="freebsd">FreeBSD</button>
@@ -74,12 +80,17 @@
           <div class="os-card os-linux">
             <h3 data-i18n="linux_h">Linux</h3>
             <p data-i18n="linux_p">X11, Wayland, SDL2, консоль TTY и framebuffer.</p>
-            <ul class="os-list arch-hints">
+            <ul class="os-list arch-hints" data-libc-hint="glibc">
               <li data-arch-hint="amd64"><code>mote-linux-amd64-{console,x11,sdl,wayland,fbdev}</code></li>
               <li data-arch-hint="arm64"><code>mote-linux-arm64-{console,x11,sdl}</code></li>
               <li data-arch-hint="armhf"><code>mote-linux-armhf-{console,x11,sdl}</code></li>
               <li data-arch-hint="i686"><code>mote-linux-i686-{console,x11,sdl}</code></li>
-              <li data-arch-hint="riscv64"><code>mote-linux-riscv64-console</code></li>
+              <li data-arch-hint="riscv64"><code>mote-linux-riscv64-{console,x11,sdl}</code></li>
+            </ul>
+            <p class="hint" data-libc-hint="musl" hidden data-i18n="linux_musl_p">Статические musl-сборки.</p>
+            <ul class="os-list" data-libc-hint="musl" hidden>
+              <li><code>mote-linux-amd64-musl-{console,fbdev}</code></li>
+              <li><code>mote-linux-arm64-musl-console</code> · armhf · i686 · riscv64</li>
             </ul>
           </div>
         </div>

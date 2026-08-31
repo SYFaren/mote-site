@@ -241,7 +241,7 @@ body[data-os="dos"] .hint { color: #c9a35a; }
   color: var(--os-accent);
   margin-right: 4px;
 }
-.arch-tab, .bsd-tab {
+.arch-tab, .bsd-tab, .libc-tab {
   border: 1px solid var(--line);
   background: var(--chip);
   padding: 4px 10px;
@@ -250,15 +250,15 @@ body[data-os="dos"] .hint { color: #c9a35a; }
   font-weight: 600;
   cursor: pointer;
 }
-.arch-tab.is-on, .bsd-tab.is-on {
+.arch-tab.is-on, .bsd-tab.is-on, .libc-tab.is-on {
   background: var(--os-accent);
   color: #fff;
   border-color: var(--os-accent);
 }
-.arch-tab[hidden], .bsd-tab[hidden] { display: none; }
+.arch-tab[hidden], .bsd-tab[hidden], .libc-tab[hidden] { display: none; }
 
-.os-list [data-arch-hint][hidden], .os-list [data-bsd-hint][hidden] { display: none; }
-[data-bsd-hint][hidden] { display: none; }
+.os-list [data-arch-hint][hidden], .os-list [data-bsd-hint][hidden], [data-libc-hint][hidden] { display: none; }
+[data-bsd-hint][hidden], [data-libc-hint][hidden] { display: none; }
 
 .zip-tree {
   display: block;
@@ -269,7 +269,6 @@ body[data-os="dos"] .hint { color: #c9a35a; }
 }
 body[data-os="dos"] .zip-tree { color: #a08040; }
 
-.os-list [data-arch-hint][hidden] { display: none; }
 .os-tab {
   border: 2px solid var(--line);
   background: var(--chip);
