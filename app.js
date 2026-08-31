@@ -29,8 +29,12 @@
       linux_p: "X11, Wayland, SDL2, консоль TTY и framebuffer. Выберите CPU ниже.",
       macos_h: "macOS",
       macos_p: "Нативные сборки: TTY‑консоль и SDL2. Apple Silicon (arm64) в CI.",
-      bsd_h: "FreeBSD / OpenBSD",
-      bsd_p: "amd64: console, X11 и SDL2. UPX для BSD пока недоступен (ограничения UPX/OpenBSD).",
+      bsd_h: "BSD",
+      freebsd_h: "FreeBSD",
+      freebsd_p: "amd64: console, X11 и SDL2.",
+      openbsd_h: "OpenBSD",
+      openbsd_p: "amd64: console, X11 и SDL2.",
+      bsd_flavor: "Дистрибутив:",
       win_h: "Windows",
       win_p: "GDI‑окно и отдельная консольная сборка. x86_64 и i686.",
       dos_h: "DOS",
@@ -74,8 +78,12 @@
       linux_p: "X11, Wayland, SDL2, TTY console and framebuffer. Pick your CPU below.",
       macos_h: "macOS",
       macos_p: "Native console and SDL2 builds. Apple Silicon (arm64) from CI.",
-      bsd_h: "FreeBSD / OpenBSD",
-      bsd_p: "amd64: console, X11 and SDL2. UPX for BSD is not available yet (UPX/OpenBSD limits).",
+      bsd_h: "BSD",
+      freebsd_h: "FreeBSD",
+      freebsd_p: "amd64: console, X11 and SDL2.",
+      openbsd_h: "OpenBSD",
+      openbsd_p: "amd64: console, X11 and SDL2.",
+      bsd_flavor: "Flavor:",
       win_h: "Windows",
       win_p: "GDI window plus console build. x86_64 and i686.",
       dos_h: "DOS",
@@ -175,6 +183,8 @@
       archRow.hidden = os !== "linux" && os !== "windows";
       archRow.setAttribute("data-for", os);
     }
+    var bsdRow = $("bsd-row");
+    if (bsdRow) bsdRow.hidden = os !== "bsd";
     document.querySelectorAll(".arch-tab").forEach(function (b) {
       var forOs = b.getAttribute("data-for-os");
       b.hidden = forOs && forOs !== os;
@@ -185,6 +195,18 @@
     }
     try { localStorage.setItem("mote-os", os); } catch (e) {}
     renderGallery();
+    if (window.__MOTE_RELEASE) renderAssets(window.__MOTE_RELEASE);
+  }
+
+  function setBsd(bsd) {
+    document.body.setAttribute("data-bsd", bsd);
+    document.querySelectorAll(".bsd-tab").forEach(function (b) {
+      b.classList.toggle("is-on", b.getAttribute("data-bsd") === bsd);
+    });
+    document.querySelectorAll("[data-bsd-hint]").forEach(function (el) {
+      el.hidden = el.getAttribute("data-bsd-hint") !== bsd;
+    });
+    try { localStorage.setItem("mote-bsd", bsd); } catch (e) {}
     if (window.__MOTE_RELEASE) renderAssets(window.__MOTE_RELEASE);
   }
 
@@ -268,7 +290,7 @@
     return parsed.os;
   }
 
-  function matchesFilter(parsed, os, arch) {
+  function matchesFilter(parsed, os, arch, bsd) {
     if (parsed.kind === "meta") {
       if (parsed.id === "all") return true;
       if (parsed.id === "sha256") return true;
@@ -277,6 +299,7 @@
     }
     if (osTabFor(parsed) !== os) return false;
     if (os === "linux" || os === "windows") return parsed.arch === arch;
+    if (os === "bsd") return parsed.os === bsd;
     return true;
   }
 
@@ -327,6 +350,7 @@
     var box = $("assets");
     var os = document.body.getAttribute("data-os") || "linux";
     var arch = document.body.getAttribute("data-arch") || "amd64";
+    var bsd = document.body.getAttribute("data-bsd") || "freebsd";
     box.innerHTML = "";
     if (!release || !release.assets || !release.assets.length) {
       box.innerHTML =
@@ -345,7 +369,7 @@
     var items = release.assets.map(function (a) {
       return { asset: a, parsed: parseAsset(a.name) };
     }).filter(function (it) {
-      return it.parsed && matchesFilter(it.parsed, os, arch);
+      return it.parsed && matchesFilter(it.parsed, os, arch, bsd);
     });
     items = hideLegacyDuplicates(items);
 
@@ -508,16 +532,23 @@
     b.addEventListener("click", function () { setArch(b.getAttribute("data-arch")); });
   });
 
+  document.querySelectorAll(".bsd-tab").forEach(function (b) {
+    b.addEventListener("click", function () { setBsd(b.getAttribute("data-bsd")); });
+  });
+
   var savedLang = "ru";
   var savedOs = "linux";
   var savedArch = "amd64";
+  var savedBsd = "freebsd";
   try {
     savedLang = localStorage.getItem("mote-lang") || savedLang;
     savedOs = localStorage.getItem("mote-os") || savedOs;
     savedArch = localStorage.getItem("mote-arch") || savedArch;
+    savedBsd = localStorage.getItem("mote-bsd") || savedBsd;
   } catch (e) {}
   setLang(savedLang);
   setArch(savedArch);
+  setBsd(savedBsd);
   setOs(savedOs);
 
   fetch(api, { headers: { Accept: "application/vnd.github+json" } })

@@ -7,7 +7,7 @@
   <meta name="description" content="mote — compact multi-platform C89 text editor" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-os="linux" data-lang="ru" data-arch="amd64">
+<body data-os="linux" data-lang="ru" data-arch="amd64" data-bsd="freebsd">
   <div class="shell">
     <header class="top">
       <div class="brand">
@@ -64,6 +64,12 @@
           <button type="button" class="arch-tab" data-arch="i686" data-for-os="windows" hidden>i686</button>
         </div>
 
+        <div id="bsd-row" class="arch-row bsd-row" hidden>
+          <span class="arch-label" data-i18n="bsd_flavor">Дистрибутив:</span>
+          <button type="button" class="bsd-tab is-on" data-bsd="freebsd">FreeBSD</button>
+          <button type="button" class="bsd-tab" data-bsd="openbsd">OpenBSD</button>
+        </div>
+
         <div class="os-panel" data-panel="linux">
           <div class="os-card os-linux">
             <h3 data-i18n="linux_h">Linux</h3>
@@ -98,11 +104,13 @@
         </div>
         <div class="os-panel" data-panel="bsd" hidden>
           <div class="os-card os-bsd">
-            <h3 data-i18n="bsd_h">FreeBSD / OpenBSD</h3>
-            <p data-i18n="bsd_p">amd64: console, X11 и SDL2.</p>
+            <h3 data-bsd-hint="freebsd" data-i18n="freebsd_h">FreeBSD</h3>
+            <h3 data-bsd-hint="openbsd" hidden data-i18n="openbsd_h">OpenBSD</h3>
+            <p data-bsd-hint="freebsd" data-i18n="freebsd_p">amd64: console, X11 и SDL2.</p>
+            <p data-bsd-hint="openbsd" hidden data-i18n="openbsd_p">amd64: console, X11 и SDL2.</p>
             <ul class="os-list">
-              <li><code>mote-freebsd-amd64-{console,x11,sdl}</code></li>
-              <li><code>mote-openbsd-amd64-{console,x11,sdl}</code></li>
+              <li data-bsd-hint="freebsd"><code>mote-freebsd-amd64-{console,x11,sdl}</code></li>
+              <li data-bsd-hint="openbsd" hidden><code>mote-openbsd-amd64-{console,x11,sdl}</code></li>
             </ul>
           </div>
         </div>

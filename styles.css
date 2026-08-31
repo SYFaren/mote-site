@@ -241,7 +241,7 @@ body[data-os="dos"] .hint { color: #c9a35a; }
   color: var(--os-accent);
   margin-right: 4px;
 }
-.arch-tab {
+.arch-tab, .bsd-tab {
   border: 1px solid var(--line);
   background: var(--chip);
   padding: 4px 10px;
@@ -250,12 +250,15 @@ body[data-os="dos"] .hint { color: #c9a35a; }
   font-weight: 600;
   cursor: pointer;
 }
-.arch-tab.is-on {
+.arch-tab.is-on, .bsd-tab.is-on {
   background: var(--os-accent);
   color: #fff;
   border-color: var(--os-accent);
 }
-.arch-tab[hidden] { display: none; }
+.arch-tab[hidden], .bsd-tab[hidden] { display: none; }
+
+.os-list [data-arch-hint][hidden], .os-list [data-bsd-hint][hidden] { display: none; }
+[data-bsd-hint][hidden] { display: none; }
 
 .zip-tree {
   display: block;
