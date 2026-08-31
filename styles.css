@@ -61,6 +61,20 @@ body[data-os="web"] {
   --banner: #0a3f3e;
   --paper: #f2faf9;
 }
+body[data-os="macos"] {
+  --os-accent: #555;
+  --os-panel: #f0f0f0;
+  --os-border: #888;
+  --banner: #2a2a2a;
+  --paper: #fafafa;
+}
+body[data-os="bsd"] {
+  --os-accent: #a02828;
+  --os-panel: #fdf0f0;
+  --os-border: #a02828;
+  --banner: #5a1515;
+  --paper: #fff8f8;
+}
 
 a { color: var(--os-accent); }
 a:visited { color: var(--os-accent); }
@@ -285,6 +299,8 @@ body[data-os="dos"] .os-tab.is-on { color: #1a1000; }
 }
 .os-linux { border-left-width: 8px; }
 .os-windows { border-left-width: 8px; }
+.os-macos { border-left-width: 8px; }
+.os-bsd { border-left-width: 8px; }
 .os-dos {
   font-family: var(--mono);
   color: #ffcc66;
@@ -317,6 +333,13 @@ body[data-os="dos"] .os-tab.is-on { color: #1a1000; }
 }
 .asset .name { font-weight: 700; }
 .asset .meta { font-size: 12px; opacity: 0.75; font-family: var(--mono); }
+.asset-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.gal-empty { margin: 0; padding: 8px 0; }
 .loading, .err { font-size: 13px; }
 .err { color: #a00; }
 body[data-os="dos"] .err { color: #ff8866; }
