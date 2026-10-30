@@ -1,9 +1,6 @@
-# mote download site
+# mote site
 
-Landing page for [mote](https://github.com/SYFaren/mote): OS tabs (Linux, Windows, macOS, BSD, DOS, Web),
-RU/EN, platform screenshots in `gallery/`, and a live WebAssembly editor in `play/`.
+Static landing page for [mote](https://github.com/SYFaren/mote): download links
+(from the latest GitHub Release), features and keys. No build step: `index.html` + `styles.css`.
 
-- Live: [syfaren.github.io/mote-site](https://syfaren.github.io/mote-site/)
-- Try: […/play/mote.html](https://syfaren.github.io/mote-site/play/mote.html)
-
-Download assets are fetched from the latest GitHub Release of `SYFaren/mote`.
+Live: https://syfaren.github.io/mote-site/
